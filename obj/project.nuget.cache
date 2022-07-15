@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "aGmWwKdZVhac6HD24zsMpWg4wL/2LizxpoEcqcn3nwWwBQ5Ao9H/tZM0Hr/ehL+557wCoTQvsuTftNPiIrXlaw==",
+  "success": true,
+  "projectFilePath": "/Users/tyler/Documents/learn/fsharp-payroll/fsharp-payroll.fsproj",
+  "expectedPackageFiles": [
+    "/Users/tyler/.nuget/packages/fsharp.core/6.0.5/fsharp.core.6.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}
