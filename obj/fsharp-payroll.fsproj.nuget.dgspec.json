@@ -20,7 +20,7 @@
           "net6.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/sdk/6.0.301/FSharp/library-packs": {},
+          "/usr/local/share/dotnet/sdk/6.0.302/FSharp/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,10 +34,75 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "EventStore.Client.Grpc.PersistentSubscriptions": {
+              "target": "Package",
+              "version": "[21.2.0, )",
+              "generatePathProperty": true
+            },
+            "EventStore.Client.Grpc.Streams": {
+              "target": "Package",
+              "version": "[21.2.0, )",
+              "generatePathProperty": true
+            },
+            "FSharp.Control.AsyncSeq": {
+              "target": "Package",
+              "version": "[3.2.1, )",
+              "generatePathProperty": true
+            },
             "FSharp.Core": {
               "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
               "target": "Package",
               "version": "[6.0.5, )",
+              "generatePathProperty": true
+            },
+            "FlatFiles": {
+              "target": "Package",
+              "version": "[5.0.0, )",
+              "generatePathProperty": true
+            },
+            "FsToolkit.ErrorHandling": {
+              "target": "Package",
+              "version": "[2.13.0, )",
+              "generatePathProperty": true
+            },
+            "FsToolkit.ErrorHandling.TaskResult": {
+              "target": "Package",
+              "version": "[2.13.0, )",
+              "generatePathProperty": true
+            },
+            "JorgeSerrano.Json.JsonSnakeCaseNamingPolicy": {
+              "target": "Package",
+              "version": "[0.9.0, )",
+              "generatePathProperty": true
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[6.0.0, )",
+              "generatePathProperty": true
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[6.0.0, )",
+              "generatePathProperty": true
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[6.0.0-preview.3.21201.4, )",
+              "generatePathProperty": true
+            },
+            "Saturn": {
+              "target": "Package",
+              "version": "[0.15.0, )",
+              "generatePathProperty": true
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.10.0, )",
+              "generatePathProperty": true
+            },
+            "Serilog.Exceptions": {
+              "target": "Package",
+              "version": "[8.1.0, )",
               "generatePathProperty": true
             }
           },
@@ -56,7 +121,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.301/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.302/RuntimeIdentifierGraph.json"
         }
       }
     }

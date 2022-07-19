@@ -12,7 +12,23 @@
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="/Users/tyler/.nuget/packages/" />
   </ItemGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)microsoft.extensions.configuration.usersecrets/6.0.0-preview.3.21201.4/build/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.props" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.configuration.usersecrets/6.0.0-preview.3.21201.4/build/netstandard2.0/Microsoft.Extensions.Configuration.UserSecrets.props')" />
+  </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgSerilog Condition=" '$(PkgSerilog)' == '' ">/Users/tyler/.nuget/packages/serilog/2.10.0</PkgSerilog>
+    <PkgSerilog_Exceptions Condition=" '$(PkgSerilog_Exceptions)' == '' ">/Users/tyler/.nuget/packages/serilog.exceptions/8.1.0</PkgSerilog_Exceptions>
     <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">/Users/tyler/.nuget/packages/fsharp.core/6.0.5</PkgFSharp_Core>
+    <PkgSaturn Condition=" '$(PkgSaturn)' == '' ">/Users/tyler/.nuget/packages/saturn/0.15.0</PkgSaturn>
+    <PkgMicrosoft_Extensions_Configuration_Binder Condition=" '$(PkgMicrosoft_Extensions_Configuration_Binder)' == '' ">/Users/tyler/.nuget/packages/microsoft.extensions.configuration.binder/6.0.0</PkgMicrosoft_Extensions_Configuration_Binder>
+    <PkgMicrosoft_Extensions_Configuration Condition=" '$(PkgMicrosoft_Extensions_Configuration)' == '' ">/Users/tyler/.nuget/packages/microsoft.extensions.configuration/6.0.0</PkgMicrosoft_Extensions_Configuration>
+    <PkgMicrosoft_Extensions_Hosting Condition=" '$(PkgMicrosoft_Extensions_Hosting)' == '' ">/Users/tyler/.nuget/packages/microsoft.extensions.hosting/6.0.0-preview.3.21201.4</PkgMicrosoft_Extensions_Hosting>
+    <PkgJorgeSerrano_Json_JsonSnakeCaseNamingPolicy Condition=" '$(PkgJorgeSerrano_Json_JsonSnakeCaseNamingPolicy)' == '' ">/Users/tyler/.nuget/packages/jorgeserrano.json.jsonsnakecasenamingpolicy/0.9.0</PkgJorgeSerrano_Json_JsonSnakeCaseNamingPolicy>
+    <PkgFsToolkit_ErrorHandling Condition=" '$(PkgFsToolkit_ErrorHandling)' == '' ">/Users/tyler/.nuget/packages/fstoolkit.errorhandling/2.13.0</PkgFsToolkit_ErrorHandling>
+    <PkgFsToolkit_ErrorHandling_TaskResult Condition=" '$(PkgFsToolkit_ErrorHandling_TaskResult)' == '' ">/Users/tyler/.nuget/packages/fstoolkit.errorhandling.taskresult/2.13.0</PkgFsToolkit_ErrorHandling_TaskResult>
+    <PkgFSharp_Control_AsyncSeq Condition=" '$(PkgFSharp_Control_AsyncSeq)' == '' ">/Users/tyler/.nuget/packages/fsharp.control.asyncseq/3.2.1</PkgFSharp_Control_AsyncSeq>
+    <PkgFlatFiles Condition=" '$(PkgFlatFiles)' == '' ">/Users/tyler/.nuget/packages/flatfiles/5.0.0</PkgFlatFiles>
+    <PkgEventStore_Client_Grpc_Streams Condition=" '$(PkgEventStore_Client_Grpc_Streams)' == '' ">/Users/tyler/.nuget/packages/eventstore.client.grpc.streams/21.2.0</PkgEventStore_Client_Grpc_Streams>
+    <PkgEventStore_Client_Grpc_PersistentSubscriptions Condition=" '$(PkgEventStore_Client_Grpc_PersistentSubscriptions)' == '' ">/Users/tyler/.nuget/packages/eventstore.client.grpc.persistentsubscriptions/21.2.0</PkgEventStore_Client_Grpc_PersistentSubscriptions>
   </PropertyGroup>
 </Project>
