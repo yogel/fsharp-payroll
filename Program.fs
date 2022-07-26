@@ -1,107 +1,63 @@
 ﻿open System
-open System.IO
 open FSharp.Control
-open EventStore.Client
 open FsToolkit.ErrorHandling
-open System.Text.Json
+open ReadEvents
+open Domain
 
-type MemberEnrollmentDto =
-    {
-        id: int
-        name: string
-    }
+// let horizon = DateTime.Now
 
-type Dto =
-    | MemberEnrollmentDto of MemberEnrollmentDto
-
-let deserialize<'dto> (e: ResolvedEvent) =
-    try
-        Some (JsonSerializer.Deserialize<'dto>(utf8Json = e.Event.Data.Span))
-    with
-    | e ->
-    // Log.Error(ex, "Failed to deserialize {@eventType} event {@eventId} {@ex}",
-    //           e.Event.EventType,
-    //           e.Event.EventNumber.ToString())
-    None
-// open Saturn
-
-let toDto (e: ResolvedEvent) : Dto option =
-    e
-    |> deserialize<MemberEnrollmentDto>
-    |> Option.map MemberEnrollmentDto
-
-let readStreamBackwards (conn: string) (streamId: string) =
-    let settings = EventStoreClientSettings.Create(conn)
-    let client = new EventStoreClient(settings)
-    client.ReadStreamAsync(
-        direction = Direction.Backwards,
-        streamName = streamId,
-        revision = StreamPosition.End)
-
-let readStream (conn: string) (streamId: string) =
-    let settings = EventStoreClientSettings.Create(conn)
-    let client = new EventStoreClient(settings)
-    
-    client.ReadStreamAsync(direction = Direction.Forwards,
-                           streamName = streamId,
-                           revision = StreamPosition.Start,
-                           configureOperationOptions = (fun a ->
-                               a.TimeoutAfter <- TimeSpan.FromSeconds(60)))
-    |> AsyncSeq.ofAsyncEnum
-    |> AsyncSeq.toListAsync
-
-let readEventsBackwards (connectionString: string) (horizon: DateTime) =
+let doTheThing (thing: DateTime) =
     async {
-        try
-            let stream = readStreamBackwards connectionString "happy-test-two"
-            let! events =
-                stream
-                |> AsyncSeq.ofAsyncEnum
-                |> AsyncSeq.takeWhile (fun e -> e.Event.Created >= horizon)
-                |> AsyncSeq.toListAsync
-            return List.rev events
-        with e ->
-            // Log.Error(e, "Failed to read from Event Store")
-            printfn "Failed to read from Event Store"
-            return []
-    }
-    
-let horizon = DateTime.MinValue
+        // Get all the events to a specified date
+        let! allEvents = readEventsBackwards "esdb://admin:changeit@localhost:2113?tls=false" (thing)
 
-let doTheThing (thing: string) =
+        // Map over the events and de-serialize them to a dto and then their domain.
+        let events =
+            allEvents
+            |> List.map toDto
+            |> List.choose id
+            |> List.map toDomain
+
+        events |> List.iter (fun e ->
+            printfn $"{e}")
+
+        return events
+    }
+
+
+let printTotalFileBytesUsingAsync (path: DateTime) =
     async {
-        let! allEvents = readEventsBackwards "esdb://admin:changeit@localhost:2113?tls=false" (DateTime.MinValue)
-
-        let events = allEvents |> List.map toDto |> List.choose id
-        
-        // (fun e ->
-        //     e
-        //     |> deserialize<MemberEnrollmentDto>
-
-        //     return e
-        // )
-
-        printfn $"Events: {allEvents} {events}"
-
-        // return events
+        let! events = doTheThing(path)
+        printfn $"events length: {events |> List.length}"
+        return ()
     }
 
+let parseDate (date: string) =
+    let success, date = DateTime.TryParse(date)
+    match success, date with
+    | true, _ -> Some date
+    | _, _ -> None
 
-// Perform an asynchronous read of a file using 'async'
-let printTotalFileBytesUsingAsync (path: string) =
-    async {
-        if File.Exists(path) then
-            let! bytes = File.ReadAllBytesAsync(path) |> Async.AwaitTask
-            let fileName = Path.GetFileName(path)
-            let! events = doTheThing("Hello")
-            printfn $"events: {events}"
-            printfn $"File {fileName} has %d{bytes.Length} bytes"
-    }
+let getHorizon argv =
+    if Array.length argv = 1 then
+        let horizon = parseDate argv[0]
+
+        horizon
+    else
+        // If no horizon is specified, use the current time
+        Some DateTime.Now
+
 
 [<EntryPoint>]
 let main argv =
-    printTotalFileBytesUsingAsync "assets/path-to-file.txt"
-    |> Async.RunSynchronously
-
-    Console.Read() |> ignore
+    let date = getHorizon argv
+    
+    // when you have a function that returns unit (doesn't return anything)
+    // generally the style is to say do callTheFunction
+    do match date with
+        | Some date ->
+            printTotalFileBytesUsingAsync date
+            |> Async.RunSynchronously
+        | None ->
+            printfn "Your date sucks lol git gud"
     0
